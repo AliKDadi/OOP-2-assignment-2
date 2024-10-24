@@ -1,0 +1,70 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class RadioButtonDemo extends JFrame implements ActionListener {
+    private JRadioButton birdButton, catButton, dogButton, rabbitButton, pigButton;
+    private ButtonGroup buttonGroup;
+    private JLabel petImageLabel;
+
+    public RadioButtonDemo() {
+        super("Pet Selection");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(new BorderLayout());
+
+        birdButton = new JRadioButton("Bird");
+        catButton = new JRadioButton("Cat");
+        dogButton = new JRadioButton("Dog");
+        rabbitButton = new JRadioButton("Rabbit");
+        pigButton = new JRadioButton("Pig");
+        buttonGroup = new ButtonGroup();
+        buttonGroup.add(birdButton);
+        buttonGroup.add(catButton);
+        buttonGroup.add(dogButton);
+        buttonGroup.add(rabbitButton);
+        buttonGroup.add(pigButton);
+
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.add(birdButton);
+        buttonPanel.add(catButton);
+        buttonPanel.add(dogButton);
+        buttonPanel.add(rabbitButton);
+        buttonPanel.add(pigButton);
+
+        petImageLabel = new JLabel();
+        petImageLabel.setHorizontalAlignment(JLabel.CENTER);
+
+        add(buttonPanel, BorderLayout.NORTH);
+        add(petImageLabel, BorderLayout.CENTER);
+
+        birdButton.addActionListener(this);
+        catButton.addActionListener(this);
+        dogButton.addActionListener(this);
+        rabbitButton.addActionListener(this);
+        pigButton.addActionListener(this);
+
+        updatePetImage("bird");
+
+        pack();
+        setVisible(true);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        JRadioButton selectedButton = (JRadioButton) e.getSource();
+        String petName = selectedButton.getText().toLowerCase();
+        updatePetImage(petName);
+
+        JOptionPane.showMessageDialog(this, "You selected: " + petName);
+    }
+
+    private void updatePetImage(String petName) {
+        ImageIcon petImage = new ImageIcon("images/" + petName + ".jpg");
+        petImageLabel.setIcon(petImage);
+        petImageLabel.setText(petName);
+    }
+
+    public static void main(String[] args) {
+        new RadioButtonDemo();
+    }
+}
